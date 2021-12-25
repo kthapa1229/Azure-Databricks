@@ -3,15 +3,15 @@ spark.conf.set("fs.azure.account.auth.type","OAuth")
 spark.conf.set("fs.azure.account.oauth.provider.type","org.apache.hadoop.fs.azurebfs.oauth2.ClientCredsTokenProvider")
 spark.conf.set("fs.azure.account.oauth.provider.type","org.apache.hadoop.fs.azurebfs.oauth2.ClientCredsTokenProvider")
 spark.conf.set("fs.azure.account.oauth2.client.id","a6fa3cbb-9e28-49d5-9bab-097d82dee9e8")
-spark.conf.set("fs.azure.account.oauth2.client.secret","mBk7Q~0YG.n9UCcJUFwOSU~3kEmjPad.U0okC")
+spark.conf.set("fs.azure.account.oauth2.client.secret",dbutils.secrets.get(scope="secret_test", key="SP"))
 spark.conf.set("fs.azure.account.oauth2.client.endpoint",f"https://login.microsoftonline.com/72f988bf-86f1-41af-91ab-2d7cd011db47/oauth2/token")
 
 spark.conf.set("spark.databricks.sqldw.jdbc.service.principal.client.id", "a6fa3cbb-9e28-49d5-9bab-097d82dee9e8")
-spark.conf.set("spark.databricks.sqldw.jdbc.service.principal.client.secret", "mBk7Q~0YG.n9UCcJUFwOSU~3kEmjPad.U0okC")
+spark.conf.set("spark.databricks.sqldw.jdbc.service.principal.client.secret", dbutils.secrets.get(scope="secret_test", key="SP"))
 
 # COMMAND ----------
 
-spark.conf.set("fs.azure.account.key.hdevathrajstorage.dfs.core.windows.net","B02QRvhS7QDCq5UOccWO+/NG08DOb09R7jaXEIENnysmQ7YqB14gXafV4iPP5HagNVJK95vjchICM5PTAku5xQ==")
+spark.conf.set("fs.azure.account.key.hdevathrajstorage.dfs.core.windows.net",dbutils.secrets.get(scope="secret_test", key="storage-key"))
 
 # COMMAND ----------
 

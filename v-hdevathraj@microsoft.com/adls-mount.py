@@ -2,10 +2,18 @@
 # MAGIC %python
 # MAGIC  spark.conf.set(
 # MAGIC    "fs.azure.account.key.hdevathrajstorage.dfs.core.windows.net",
-# MAGIC    dbutils.secrets.get(scope="mysecretscope",key="accountname"))
+# MAGIC    dbutils.secrets.get(scope="secret_test",key="storage-key"))
 # MAGIC spark.conf.set("fs.azure.createRemoteFileSystemDuringInitialization", "true")
 # MAGIC dbutils.fs.ls("abfss://firstcontainer@hdevathrajstorage.dfs.core.windows.net/")
 # MAGIC spark.conf.set("fs.azure.createRemoteFileSystemDuringInitialization", "false")
+
+# COMMAND ----------
+
+dbutils.secrets.list("secret_test")
+
+# COMMAND ----------
+
+dbutils.secrets.listScopes()
 
 # COMMAND ----------
 
@@ -13,20 +21,8 @@ spark.conf.set("fs.azure.account.auth.type","OAuth")
 spark.conf.set("fs.azure.account.oauth.provider.type","org.apache.hadoop.fs.azurebfs.oauth2.ClientCredsTokenProvider")
 spark.conf.set("fs.azure.account.oauth.provider.type","org.apache.hadoop.fs.azurebfs.oauth2.ClientCredsTokenProvider")
 spark.conf.set("fs.azure.account.oauth2.client.id","a6fa3cbb-9e28-49d5-9bab-097d82dee9e8")
-spark.conf.set("fs.azure.account.oauth2.client.secret","mBk7Q~0YG.n9UCcJUFwOSU~3kEmjPad.U0okC")
+spark.conf.set("fs.azure.account.oauth2.client.secret", dbutils.secrets.get(scope="secret_test", key="SP"))
 spark.conf.set("fs.azure.account.oauth2.client.endpoint","https://login.microsoftonline.com/72f988bf-86f1-41af-91ab-2d7cd011db47/oauth2/token")
-
-# COMMAND ----------
-
-spark.conf.set("fs.azure.account.key.myfirstaccountdata.dfs.core.windows.net","QWjCuY6qWYXz/qmvPD/cb1PHnSF6MA05XMRo4OAcWJ5+KxHlAbMDg3lTjWrNvpwnaT4NXOZg3zziAHu4tcc1Ig==")
-
-# COMMAND ----------
-
-dbutils.fs.ls("abfss://newcontainerfortable@myfirstaccountdata.dfs.core.windows.net/newcontainerfortable")
-
-# COMMAND ----------
-
-print(secret, x)
 
 # COMMAND ----------
 
@@ -37,7 +33,7 @@ dbutils.fs.ls("abfss://firstcontainer@hdevathrajstorage.dfs.core.windows.net/")
 configs = {"fs.azure.account.auth.type": "OAuth",
            "fs.azure.account.oauth.provider.type": "org.apache.hadoop.fs.azurebfs.oauth2.ClientCredsTokenProvider",
            "fs.azure.account.oauth2.client.id": "a6fa3cbb-9e28-49d5-9bab-097d82dee9e8",
-           "fs.azure.account.oauth2.client.secret": "mBk7Q~0YG.n9UCcJUFwOSU~3kEmjPad.U0okC",
+           "fs.azure.account.oauth2.client.secret": dbutils.secrets.get(scope="secret_test", key="SP"),
            "fs.azure.account.oauth2.client.endpoint": "https://login.microsoftonline.com/72f988bf-86f1-41af-91ab-2d7cd011db47/oauth2/token"}
 
 # Optionally, you can add <directory-name> to the source URI of your mount point.
@@ -115,7 +111,7 @@ dbutils.fs.ls("/mnt/test-permissions")
 configs = {"fs.azure.account.auth.type": "OAuth",
            "fs.azure.account.oauth.provider.type": "org.apache.hadoop.fs.azurebfs.oauth2.ClientCredsTokenProvider",
            "fs.azure.account.oauth2.client.id": "932dae52-6784-4a8f-88e1-596512f4f300",
-           "fs.azure.account.oauth2.client.secret": "4UB7Q~JHNQJqrADdADGbbFClNuUk4iddE7M.d",
+           "fs.azure.account.oauth2.client.secret": "4UB7Q~JHNQJqrADdADGbbFClNuUk4iddE7",
            "fs.azure.account.oauth2.client.endpoint": "https://login.microsoftonline.com/72f988bf-86f1-41af-91ab-2d7cd011db47/oauth2/token"}
 
 # Optionally, you can add <directory-name> to the source URI of your mount point.
@@ -127,19 +123,7 @@ dbutils.fs.mount(
 # COMMAND ----------
 
 # MAGIC %python
-# MAGIC spark.conf.set(
-# MAGIC    "fs.azure.sas.destination.imageryproducts.blob.core.windows.net.Base64","?sv=2019-02-02&ss=b&srt=sco&sp=rl&se=2022-12-31T00:00:00Z&st=2020-01-01T00:00:00Z&spr=https&sig=WRTJtc5%2ByxYzqgI7Vnpi6XIPOZsxIKFo6Nth%2BTgc1Os%3D")
-
-# COMMAND ----------
-
-# MAGIC %python
 # MAGIC dbutils.fs.ls("/mnt/")
-
-# COMMAND ----------
-
-# MAGIC %python
-# MAGIC  spark.conf.set(
-# MAGIC    "fs.azure.account.key.leavemealonestorage.dfs.core.windows.net","nAQPXogu5qj38LzSg/WjR0lI4hcky53t71eJvc8X8sJON+PhYOY8/HFLj707354TOSMXb8WaNid9XpV1cJm7zw==")
 
 # COMMAND ----------
 
@@ -246,15 +230,6 @@ dbutils.fs.mount(
 # COMMAND ----------
 
 # MAGIC %python
-# MAGIC # spark.conf.set(
-# MAGIC #   "fs.azure.account.key.gfsdwalation.blob.core.windows.net",
-# MAGIC #   "ZHDFc/pOVBnB9MMEGjbLiMYQ/N0iP7J4Gfe+IsDlX9AT1r9G6QR1KqO52dJC1oe314ycHql3sdFq+ZjquOUNPA==")
-# MAGIC 
-# MAGIC spark.conf.set("fs.azure.account.key.gfsdwalation.dfs.core.windows.net","ZHDFc/pOVBnB9MMEGjbLiMYQ/N0iP7J4Gfe+IsDlX9AT1r9G6QR1KqO52dJC1oe314ycHql3sdFq+ZjquOUNPA==")
-
-# COMMAND ----------
-
-# MAGIC %python
 # MAGIC dbutils.fs.ls("abfss://insights-logs-clusters@gfsdwalation.dfs.core.windows.net/")
 
 # COMMAND ----------
@@ -352,16 +327,6 @@ df = spark.range(10)
 
 # COMMAND ----------
 
-spark.conf.set("fs.azure.account.auth.type", "OAuth")
-spark.conf.set("fs.azure.account.oauth.provider.type",  "org.apache.hadoop.fs.azurebfs.oauth2.ClientCredsTokenProvider")
-spark.conf.set("fs.azure.account.oauth2.client.id", "932dae52-6784-4a8f-88e1-596512f4f300")
-spark.conf.set("fs.azure.account.oauth2.client.secret", "4UB7Q~JHNQJqrADdADGbbFClNuUk4iddE7M.d")
-spark.conf.set("fs.azure.account.oauth2.client.endpoint", "https://login.microsoftonline.com/72f988bf-86f1-41af-91ab-2d7cd011db47/oauth2/token")
-spark.conf.set("spark.databricks.sqldw.jdbc.service.principal.client.id", "932dae52-6784-4a8f-88e1-596512f4f300")
-spark.conf.set("spark.databricks.sqldw.jdbc.service.principal.client.secret","4UB7Q~JHNQJqrADdADGbbFClNuUk4iddE7M.d")
-
-# COMMAND ----------
-
 
 
 # COMMAND ----------
@@ -421,7 +386,7 @@ spark.conf.set("fs.azure.account.key.hdevathrajstorage.dfs.core.windows.net",dbu
 
 # COMMAND ----------
 
-spark.conf.set("fs.azure.account.key.hdevathrajstorage.dfs.core.windows.net","B02QRvhS7QDCq5UOccWO+/NG08DOb09R7jaXEIENnysmQ7YqB14gXafV4iPP5HagNVJK95vjchICM5PTAku5xQ==")
+spark.conf.set("fs.azure.account.key.hdevathrajstorage.dfs.core.windows.net",dbutils.secrets.get(scope="secret_test", key="storage-key"))
 # Get some data from an Azure Synapse table.
 df = spark.read \
   .format("com.microsoft.sqlserver.jdbc.SQLServerDriver") \
@@ -453,10 +418,6 @@ df['src_acct_nbr'] = "123"
 
 # COMMAND ----------
 
-jdbc:sqlserver://testing-synapse.sql.azuresynapse.net:1433;database=testing_pool;user=v-hdevathraj@microsoft.com;password=Mr-Houst305!;encrypt=true;trustServerCertificate=false;hostNameInCertificate=*.sql.azuresynapse.net;loginTimeout=30;Authentication=ActiveDirectoryIntegrated
-
-# COMMAND ----------
-
 # MAGIC %sh
 # MAGIC pwd
 
@@ -473,15 +434,6 @@ jdbc:sqlserver://testing-synapse.sql.azuresynapse.net:1433;database=testing_pool
 # COMMAND ----------
 
 # MAGIC %sh ntpq -p
-
-# COMMAND ----------
-
-spark.conf.set("fs.azure.account.auth.type","OAuth")
-spark.conf.set("fs.azure.account.oauth.provider.type","org.apache.hadoop.fs.pxpxgen2.oauth2.ClientCredsTokenProvider")
-spark.conf.set("fs.azure.account.oauth.provider.type","org.apache.hadoop.fs.pxpxgen2.oauth2.ClientCredsTokenProvider")
-spark.conf.set("fs.azure.account.oauth2.client.id","9f7abaac-37ba-46ff-b64b-2a9cf1b55464")
-spark.conf.set("fs.azure.account.oauth2.client.secret","BCM7Q~OT3KXdUVGDaPBwzm-43ZbfkVKIJy2bv")
-spark.conf.set("fs.azure.account.oauth2.client.endpoint","https://login.microsoftonline.com/72f988bf-86f1-41af-91ab-2d7cd011db47/oauth2/token")
 
 # COMMAND ----------
 
@@ -585,4 +537,5 @@ jdbcDF.show()
 # MAGIC jdbcDF.show
 
 # COMMAND ----------
+
 
